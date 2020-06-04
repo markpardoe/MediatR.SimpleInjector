@@ -1,13 +1,14 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using MediatR.Pipeline;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System;
+using SimpleInjector;
 
 namespace MediatR.SimpleInjector {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using System;
-    using global::SimpleInjector;
+
 
     public static class ContainerExtension {
         public static Container BuildMediator (this Container container, params Assembly[] assemblies) {
@@ -26,7 +27,7 @@ namespace MediatR.SimpleInjector {
                 IncludeGenericTypeDefinitions = true,
                     IncludeComposites = false,
             });
-            container.Register (typeof (INotificationHandler<>), notificationHandlerTypes);
+            container.Collection.Register (typeof (INotificationHandler<>), notificationHandlerTypes);
 
             container.Collection.Register (typeof (IPipelineBehavior<,>), Enumerable.Empty<Type> ());
             container.Collection.Register (typeof (IRequestPreProcessor<>), Enumerable.Empty<Type> ());
