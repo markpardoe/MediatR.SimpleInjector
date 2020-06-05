@@ -23,9 +23,10 @@ namespace MediatR.SimpleInjector {
             container.Register (typeof (IRequestHandler<,>), allAssemblies);
 
             // we have to do this because by default, generic type definitions (such as the Constrained Notification Handler) won't be registered
-            var notificationHandlerTypes = container.GetTypesToRegister (typeof (INotificationHandler<>), assemblies, new TypesToRegisterOptions {
-                IncludeGenericTypeDefinitions = true,
-                    IncludeComposites = false,
+            var notificationHandlerTypes = container.GetTypesToRegister (typeof (INotificationHandler<>), assemblies, new TypesToRegisterOptions 
+            {
+                IncludeGenericTypeDefinitions = false,
+                IncludeComposites = false,
             });
             container.Collection.Register (typeof (INotificationHandler<>), notificationHandlerTypes);
 
